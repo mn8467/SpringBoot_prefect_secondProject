@@ -1,0 +1,127 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+
+/* Reset */
+html,body,h1,h2,h3,h4,h5,h6,div,p,blockquote,pre,code,address,ul,ol,li,nav,section,article,header,footer,main,aside,dl,dt,dd,table,thead,tbody,tfoot,label,caption,th,td,form,fieldset,legend,hr,input,button,textarea,object,figure,figcaption {margin:0;padding:0;}
+body,input,select,textarea,button,img,fieldset {border:none;}
+ul,ol,li{list-style:none;}
+table{width:100%;border-spacing:0;border-collapse:collapse;}
+address,cite,code,em,i{font-style:normal;font-weight:normal;}
+label,img,input,select,textarea,button,a {vertical-align:middle;}
+u,ins,a{text-decoration:none;}
+button { cursor: pointer;}
+
+body{
+   font-family: 'Nanum Gothic', sans-serif;
+   /* border: 1px solid #ff0000; */
+}  
+   
+header {
+    height: 50px;
+    background-color: #005b9f;
+    line-height: 50px;/*텍스트 줄의 높이*/
+}  
+  
+footer {
+    height: 40px;
+    background-color: #616161;
+    line-height: 40px;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+}  
+  
+.content_wrap {
+    display: flex; /* Flex Container */
+    flex-direction: row;/* Flex Container 내의 자식 요소들을 수평 방향 */
+    min-height: calc(100vh - 30vh);/*최소높이 : 100vh는 뷰포트 높이(브라우저 화면의 100% 높이)*/
+}  
+  
+article {
+   width: 75%;
+}  
+  
+aside{
+   width: 25%;
+}
+
+a {
+ text-decoration: none;
+ color: #ffffff;
+}  
+  
+.p_navbar_logo{
+  font-size: 25px;
+  padding: 8px 12px;
+}
+
+.p_navbar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #243342;
+  padding: 8px 12px;
+}
+.p_navbar_menu{
+   display: flex;
+   list-style: none;
+   padding-left: 0;
+}  
+
+.p_navbar_menu li {
+   padding: 8px 12px;
+}
+
+.p_navbar_menu li:hover { 
+   background: #d26060;
+   border-radius: 4px;
+}
+
+.button {
+	color: white;
+}
+
+
+/*** Single Page Start ***/
+/* Pagination 스타일 */
+.pagination nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+}
+
+.pagination nav ul li {
+    margin: 0 4px;
+}
+
+.pagination nav ul li a {
+    color: var(--bs-dark);
+    padding: 10px 16px;
+    text-decoration: none;
+    transition: background-color 0.5s;
+    border: 1px solid var(--bs-secondary);
+    display: block;
+}
+
+.pagination nav ul li a.active {
+    background-color: #3986ff;
+    color: var(--bs-light);
+    border-color: var(--bs-secondary);
+}
+
+.pagination nav ul li a:hover:not(.active) {
+    background-color: var(--bs-primary);
+    color: var(--bs-light);
+}
+/*** Single Page End ***/
+  
+/* header,
+nav,
+.content_wrap,
+article,
+aside,
+footer
+{
+    border: 1px solid #ccc;
+} */

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test_prefect.mapper.SearchDao">
+    <!-- check name (이메일 찾기 부분) -->
+    <select id="nameCheck" parameterType="UserVO" resultType="int">
+        SELECT COUNT(*) cnt
+        FROM users
+        WHERE name = #{name}
+    </select>
+
+    <!-- check tel (이메일 찾기 부분) -->
+    <select id="telCheck" parameterType="UserVO" resultType="int">
+        SELECT COUNT(*) cnt
+        FROM users
+        WHERE tel = #{tel}
+    </select>
+
+    <!-- search email (이메일 찾기 부분) -->
+    <select id="searchEmail" parameterType="UserVO" resultType="UserVO">
+        SELECT email
+        FROM users
+        WHERE name = #{name} AND tel = #{tel}
+    </select>
+
+    <!-- check email (비밀번호 찾기 부분)-->
+    <select id="emailCheck" parameterType="UserVO" resultType="int">
+        SELECT COUNT(*) cnt
+        FROM users
+        WHERE email = #{email}
+    </select>
+
+
+</mapper>

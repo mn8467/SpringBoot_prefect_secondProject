@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"  content="width=device-width, initial-scale=1">
+
+ <link href="/css/bootstrap.min.css" rel="stylesheet" >
+ <script src="/js/bootstrap.bundle.min.js"></script>
+<style>
+</style>
+<title>PCWK</title>
+<script>
+</script>
+</head>
+<body>
+<div class="container mt-3">
+    <!-- 제목 -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">게시등록</h1>
+        </div>
+    </div>    
+    <!--// 제목 ----------------------------------------------------------------->
+    <!-- 검색 -->
+    <div class="row">
+        <div class="col-7 ">
+            <form action="#">
+                <div class="row g-1">
+                    <label for="searchDiv" class="col-auto col-form-label">검색조건</label>
+                    <div class="col-auto">
+                        <select class="form-select" id="searchDiv" name="searchDiv">
+                            <option value="">전체</option>
+                            <option value="10">제목</option>
+                            <option value="20">내용</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" class="form-control" id="searchWord" name="searchWord" maxlength="100" placeholder="검색어를 입력 하세요">
+                    </div>   
+                    <div class="col-auto">
+                        <select class="form-select" id="pageSize" name="pageSize">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>            
+                </div>                 
+            </form>   
+        </div>  
+        <div class="col-5 d-flex justify-content-end  gap-1">
+            <input type="button" value="목록" class="btn btn-primary" >
+            <input type="button" value="등록" class="btn btn-primary" >
+        </div>      
+    </div>
+      
+
+    <!--// 검색 ----------------------------------------------------------------->
+    
+    
+    <!-- table -->
+    <table class="table table-bordered border-primary table-hover table-striped">
+      <thead>
+        <tr >
+          <th scope="col">NO</th>
+          <th scope="col">제목</th>
+          <th scope="col">등록일</th>
+          <th scope="col">등록자</th>
+          <th scope="col">조회수</th>
+          <th scope="col">SEQ</th>
+        </tr>
+      </thead>         
+      <tbody>
+        <tr>
+          <td>1</th>
+          <td>공지1</td>
+          <td>10:15</td>
+          <td>이상무</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>2</th>
+          <td>공지2</td>
+          <td>10:15</td>
+          <td>이상무</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>3</th>
+          <td>공지3</td>
+          <td>10:15</td>
+          <td>이상무</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>4</th>
+          <td>공지4</td>
+          <td>10:15</td>
+          <td>이상무</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>5</th>
+          <td>공지5</td>
+          <td>10:15</td>
+          <td>이상무</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>6</th>
+          <td>공지6</td>
+          <td>10:15</td>
+          <td>이상무</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>7</th>
+          <td>공지7</td>
+          <td>10:15</td>
+          <td>이상무</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>8</th>
+          <td>공지8</td>
+          <td>10:15</td>
+          <td>이상무</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>9</th>
+          <td>공지9</td>
+          <td>10:15</td>
+          <td>이상무</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>10</th>
+          <td>공지10</td>
+          <td>10:15</td>
+          <td>이상무</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>      
+      </tbody>
+    </table>
+    <!--// table --------------------------------------------------------------> 
+    
+    <!-- 페이징 -->           
+    <div class="d-flex justify-content-center">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item"><a  class="page-link" href="#"><span>&laquo;</span></a></li>
+                <li><a  class="page-link" href="#">1</a></li>
+                <li><a  class="page-link" href="#">2</a></li>
+                <li><a  class="page-link" href="#">3</a></li>
+                <li><a  class="page-link" href="#">4</a></li>
+                <li><a  class="page-link" href="#">5</a></li>
+                <li><a  class="page-link" href="#">6</a></li>
+                <li><a  class="page-link" href="#">7</a></li>
+                <li><a  class="page-link" href="#">8</a></li>
+                <li><a  class="page-link" href="#">9</a></li>
+                <li><a  class="page-link" href="#">10</a></li>
+                <li><a  class="page-link" href="#"><span>&raquo;</span></a></li>
+            </ul>
+        </nav>
+    </div>
+    <!--// 페이징 ---------------------------------------------------------------->
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

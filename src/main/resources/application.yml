@@ -1,0 +1,42 @@
+spring:
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: mn8467@naver.com
+    password: 비번
+    default-encoding: utf-8
+    javaMailProperties:
+     mail.smtp.host: smtp.naver.com
+     mail.smtp.port: 465
+     mail.smtp.auth: true
+     mail.smtp.ssl.protocols: TLSv1.2
+     mail.smtp.ssl.enable: true
+     mail.smtp.ssl.trust: smtp.naver.com
+     mail.debug: true
+
+  mvc:
+    static-path-pattern: /static/**
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/prefect?serverTimezone=Asia/Seoul
+    username: JEONG
+    password: 1234
+
+
+    hikari:
+      connection-test-query: SELECT 1 FROM DUAL
+      connection-timeout: 600000
+      maximum-pool-size: 500
+      max-lifetime: 1800000
+      minimum-idle: 20
+      validation-timeout: 3000
+      idle-timeout: 60000
+
+mybatis:
+  type-aliases-package: com.example.test_prefect.model
+  mapper-locations: mappers/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

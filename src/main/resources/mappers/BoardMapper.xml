@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test_prefect.mapper.BoardDao">
+    <!-- 조회수 -->
+    <update id="updateReadCnt" parameterType="com.example.test_prefect.model.BoardVO">
+	  <![CDATA[
+        UPDATE board
+        SET read_cnt = NVL(read_cnt,0)+1
+        WHERE seq  = #{seq}
+          AND reg_id <> #{regId} ]]>
+	</update>
+
+    <!-- 게시물 총 개수 -->
+    <select id="totalBoardByReadCnt" resultType="com.example.test_prefect.model.BoardVO">
+   <![CDATA[
+        SELECT seq,
+               div_num,
+               title,
+               contents,
+               read_cnt,
+               reg_dt,
+               reg_id,
+               mod_dt,
+               mod_id,
+               uuid
+        FROM (
+                 SELECT seq,
+                        div_num,
+                        title,
+                        contents,
+                        read_cnt,
+                        reg_dt,
+                        reg_id,
+                        mod_dt,
+                        mod_id,
+                        uuid
+                 FROM boards
+                 ORDER BY read_cnt DESC
+             ) AS subquery
+        WHERE div_num = 20
+            LIMIT 5
+        ]]>
+    </select>
+
+
+    <!-- 게시물 리스트 조회수 순서 -->
+    <select id="totalBoard" resultType="int">
+        SELECT count(seq) as
+                   totalBoard FROM boards
+    </select>
+
+    <!-- div -->
+    <sql id="divCondition">
+        <choose>
+            <when test=" ''!=div_num and '20' == div_num "><!-- 20 -->
+                AND div_num = '20'
+            </when>
+            <otherwise> <!-- 10 -->
+                AND div_num = '10'
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 검색조건 -->
+    <sql id="searchCondition">
+        <choose>
+            <when test=" ''!= searchDiv and '10' == searchDiv ">
+                AND title LIKE #{searchWord} || '%'
+            </when>
+            <when test=" ''!= searchDiv and '20' == searchDiv ">
+                AND contents LIKE #{searchWord} || '%'
+            </when>
+            <when test=" ''!= searchDiv and '30' == searchDiv ">
+                AND mod_id LIKE #{searchWord} || '%'
+            </when>
+            <otherwise>
+                <!-- '전체' 검색을 위해 모든 데이터를 조회해야 하므로, 조건을 적용하지 않습니다. -->
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 게시글 리스트 조회 내가 다시해봐야지..-->
+    <select id="doRetrieve" parameterType="com.example.test_prefect.model.BoardVO"
+            resultType="com.example.test_prefect.model.BoardVO">
+        SELECT A.*, B.totalCnt, R.replyCnt
+        FROM (SELECT tt1.seq,
+              tt1.rnum as no,
+              tt1.div_num,
+              tt1.title,
+              tt1.read_cnt as readCnt,
+              tt1.modDt,
+              tt1.mod_Id as
+              modId,
+              tt1.uuid
+              FROM (SELECT ROWNUM as rnum, T1.*
+                    FROM (SELECT b.seq,
+                                 b.div_num,
+                                 b.title,
+                                 b.read_cnt,
+                                 DECODE(TO_CHAR(b.mod_dt, 'YYYYMMDD'),
+                                 TO_CHAR(SYSDATE, 'YYYYMMDD'),
+        TO_CHAR(b.mod_dt, 'HH24:MI'),
+        TO_CHAR(b.mod_dt, 'YYYY-MM-DD')) as modDt,
+        b.mod_id,
+        b.uuid
+        FROM boards b
+        WHERE 1=1
+        <include refid="divCondition" />
+        <include refid="searchCondition" />
+        ORDER BY b.mod_dt DESC
+        ) T1
+        <![CDATA[   WHERE ROWNUM <= #{pageSize} * (#{pageNo}-1) + #{pageSize} ]]>
+        ) tt1
+        <![CDATA[ WHERE rnum >= #{pageSize} * (#{pageNo}-1) + 1 ]]>
+        ) A
+        LEFT JOIN (
+        SELECT boards_seq, COUNT(*) as replyCnt
+        FROM reply
+        GROUP BY
+        board_seq
+        ) R ON A.seq = R.boards_seq
+        CROSS JOIN (
+        SELECT COUNT(*) as
+        totalCnt
+        FROM board
+        WHERE 1=1
+        <include refid="divCondition" />
+        <include refid="searchCondition" />
+        ) B order by no
+    </select>
+
+    <!-- 전체 게시글 삭제 바꾼쿼리 -->
+    <delete id="doDeleteAll" parameterType="com.example.test_prefect.model.BoardVO">
+        DELETE FROM
+            boards
+        WHERE
+            title LIKE CONCAT(#{title}, '%');
+    </delete>
+
+    <update id="doUpdate" parameterType="com.example.test_prefect.model.BoardVO">
+        UPDATE boards
+        SET
+            div_num = #{div},
+            title = #{title},
+            contents = #{contents},
+            mod_dt = NOW(),
+            mod_id =
+                #{modId}
+        WHERE seq = #{seq}
+    </update>
+
+    <select id="getBoardSeq" resultType="int">
+        SELECT BOARDS_SEQ.NEXTVAL
+        FROM DUAL
+    </select>
+
+    <select id="doSelectOne" parameterType="com.example.test_prefect.model.BoardVO"
+            resultType="com.example.test_prefect.model.BoardVO">
+        SELECT
+            seq,
+            div_num,
+            title,
+            contents,
+            read_cnt,
+            TO_CHAR(reg_dt,'YYYY-MM-DD HH24:MI:SS') reg_dt,
+            reg_id,
+            TO_CHAR(mod_dt,'YYYY-MM-DD HH24:MI:SS') mod_dt,
+            mod_id,
+            uuid
+        FROM boards
+        WHERE seq = #{seq}
+    </select>
+
+    <delete id="doDelete" parameterType="com.example.test_prefect.model.BoardVO">
+        DELETE FROM boards
+        WHERE seq =
+              #{seq}
+    </delete>
+
+    <insert id="doSave" parameterType="com.example.test_prefect.model.BoardVO">
+        INSERT INTO boards (
+            seq,
+            div_num,
+            title,
+            contents,
+            read_cnt,
+            reg_dt,
+            reg_id,
+            mod_dt,
+            mod_id,
+            uuid
+        ) VALUES (
+                     #{seq},
+                     #{div},
+                     #{title},
+                     #{contents},
+                     #{readCnt},
+                     NOW(),
+                     #{regId},
+                     NOW(),
+                     #{regId},
+                     #{uuid}
+                 );
+    </insert>
+
+</mapper>

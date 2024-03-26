@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test_prefect.mapper.LicensesDao">
+
+    <select id="getLicensesName" resultType="licensesVO">
+        SELECT
+            seq as licensesSeq,
+            name as licensesName
+        FROM
+            licenses
+    </select>
+
+    <select id="getLicensesSeq" resultType="int">
+        SELECT licenses_seq FROM user_licenses
+    </select>
+
+    <select id="doSelectOne" parameterType="LicensesVO" resultType="LicensesVO">
+        SELECT
+            ul.email,u.name, ul.licenses_seq, l.name ,ul.reg_dt
+        FROM
+            User_Licenses ul
+                JOIN licenses l ON ul.licenses_seq = l.seq
+                JOIN users u ON u.email = ul.email
+        WHERE
+            ul.licenses_seq = #{licensesSeq} AND u.email = #{email}
+    </select>
+
+    <select id="getUserLicenses" parameterType="UserVO" resultType="LicensesVO">
+        SELECT
+            ul.email,
+            ul.licenses_seq,
+            l.name AS licensesName,
+            DATE_FORMAT(ul.reg_dt, '%Y-%m-%d') AS reg_dt
+        FROM
+            User_Licenses ul
+                JOIN
+            Licenses l ON ul.licenses_seq = l.seq
+                JOIN
+            Users u ON u.email = ul.email
+        WHERE
+            u.email = #{email}
+    </select>
+
+    <select id="doRetrieve" parameterType="LicensesVO" resultType="LicensesVO">
+        SELECT
+            ul.email,u.name, ul.licenses_seq, l.name ,ul.reg_dt
+        FROM
+            User_Licenses ul
+                JOIN
+            licenses l
+            ON
+                ul.licenses_seq = l.seq
+                JOIN
+            users u
+            ON
+                u.email = ul.email
+    </select>
+
+    <insert id="doSave" parameterType="LicensesVO">
+        INSERT INTO user_licenses (
+            licenses_seq,
+            email,
+            reg_dt
+        ) VALUES (
+                     #{licensesSeq},
+                     #{email},
+                     #{regDt}
+                 )
+    </insert>
+
+    <delete id="doDelete" parameterType="LicensesVO">
+        DELETE FROM user_licenses
+        WHERE
+            email = #{email}
+          AND licenses_seq = #{licensesSeq}
+    </delete>
+
+    <update id="doUpdate" parameterType="LicensesVO">
+        UPDATE
+            user_licenses
+        SET
+            reg_dt = #{regDt}
+        WHERE
+            email = #{email}
+          AND licenses_seq = #{licensesSeq}
+    </update>
+
+
+
+</mapper>

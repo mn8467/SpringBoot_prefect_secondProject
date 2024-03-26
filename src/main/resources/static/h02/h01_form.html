@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="author" content="pcwk">
+<title>form</title>
+</head>
+<body>
+   
+    <h2>label, input</h2>
+    <hr/>
+    <!-- *method: get,post
+    get: 데이터를 256~ 4,096byte까지만 서버로 전달, 주소 표시줄에 사용자가 입력한 값이 보인다.
+    post: 입력내용의 제한 없음, 주소 표시줄에 사용자가 입력한 값이 안보인다.
+    
+        *action : form태그 안의 내용을 처리해 줄 서버프로그램을 지정
+        *name   : 자바스크립트에서 form제어시 사용
+        *target : action속성에서 지정한 스크립트 파일을 현재 창이 아님 다른 위치에서 열도록 한다.
+      -->
+      
+    <!-- 
+    fieldset : 하나의 폼 안에서 여러 구역을 나누어 표시할때 사용
+    legend   : 구역의 이름
+     -->  
+    <form action="/ehr/user/doSelectOne.do" method="get" name="userForm">
+        <fieldset>
+          <legend>그룹이름</legend>
+	        <div>
+	            <label for="user_id">아이디(6자이상)</label>
+	            <input type="text" id="user_id">
+	        </div>
+        </fieldset>
+    </form>
+    
+</body>
+</html>

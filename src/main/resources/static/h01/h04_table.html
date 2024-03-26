@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  table,tr,th,td {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+  }
+  
+  th,td {
+    padding: 10px 20px;
+  }
+</style>
+<title>html테이블</title>
+
+</head>
+<body>
+    <h2>상품구성</h2>
+    <!-- table 
+    col, colgroup태그 : 특정열에 배경색 넣기, 너비 바꾸기
+    col : 열1개
+    colgroup : 열2이상
+    -->
+    <table>
+        <colgroup>
+            <col style="background: #eeeeee;"> <!-- 첫 번째 열의 배경색 지정 -->
+            <col style="width: 150px; "><!-- 두 번째 열의 넓이 지정 -->
+            <col style="width: 150px;"><!-- 세 번째 열의 넓이 지정 -->
+        </colgroup>
+        <thead>
+            <tr>
+                <th>용도</th>
+                <th>중량</th>
+                <th>갯수</th>
+                <th>가격</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">선물용</td>
+                <td>3kg</td>
+                <td colspan="2">11~16과 35,000원</td>
+            </tr>
+            <tr>
+                <td>5kg</td>
+                <td>18~20과</td>
+                <td>52,000원</td>
+            </tr>            
+            <tr>
+                <td rowspan="2">가정용</td>
+                <td>3kg</td>
+                <td>11~16과</td>
+                <td>30,000원</td>
+            </tr>
+            <tr>
+                <td>5kg</td>
+                <td>18~20과</td>
+                <td>47,000원</td>
+            </tr>               
+            
+        </tbody>
+    </table>
+    <!--// table -------------------------------------------------------------->
+</body>
+</html>

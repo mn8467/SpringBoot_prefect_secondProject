@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test_prefect.mapper.LoginDao">
+    <!-- idCheck -->
+
+    <select id="idCheck" parameterType="UserVO" resultType="int">
+        SELECT
+            COUNT(*) cnt
+        FROM
+            users
+        WHERE email = #{email}
+    </select>
+
+    <!-- idPassCheck -->
+    <select id="idPassCheck" parameterType="UserVO" resultType="int">
+        SELECT
+            COUNT(*) cnt
+        FROM
+            users
+        WHERE email = #{email}
+          AND   password = #{password}
+    </select>
+
+    <!-- getUserEmail -->
+    <select id="getUserEmail" parameterType="UserVO" resultType="UserVO">
+        SELECT
+            *
+        FROM
+            users
+        WHERE email = #{email}
+    </select>
+
+    <!-- login -->
+    <select id="doSelectOne" parameterType="UserVO" resultType="UserVO">
+        SELECT
+            email,
+            name,
+            password,
+            tel,
+            edu,
+            role,
+            status
+        FROM
+            users
+        WHERE email = #{email}
+    </select>
+
+
+</mapper>

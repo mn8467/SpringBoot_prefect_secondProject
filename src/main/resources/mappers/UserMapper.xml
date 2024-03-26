@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test_prefect.mapper.UserDao">
+
+    <select id="totalUsers" resultType="int">
+        select count(email) as
+                   totalUsers from users
+    </select>
+
+    <select id="selectMalePercentage" resultType="int">
+        SELECT
+            ROUND(AVG(DECODE(gender, '남자', 1, 0)) * 100, 2) AS male_percentage
+        FROM
+            users
+    </select>
+
+    <select id="selectFemalePercentage" resultType="int">
+        SELECT
+            ROUND(AVG(DECODE(gender, '남자', 1, 0)) * 100, 2) AS male_percentage,
+        FROM
+            users
+    </select>
+
+
+    <select id="emailDuplicateCheck" parameterType="UserVO"
+            resultType="int">
+        SELECT
+            COUNT(*) cnt
+        FROM
+            users
+        WHERE email = #{email}
+    </select>
+
+    <sql id="searchCondition">
+        <where>
+            <choose>
+                <when test="searchDiv !=null and searchDiv == '10'">
+                    email LIKE '%' || #{searchWord} || '%'
+                </when>
+                <when test="searchDiv !=null and searchDiv == '20'">
+                    name LIKE '%' || #{searchWord} ||'%'
+                </when>
+                <when
+                        test="searchDiv != null and searchDiv == '30' and searchWord == '학생'">
+                    AND role = '30'
+                </when>
+                <when
+                        test="searchDiv != null and searchDiv == '30' and searchWord == '학원 관리자'">
+                    AND role = '20'
+                </when>
+                <when
+                        test="searchDiv != null and searchDiv == '30' and searchWord == '시스템 관리자'">
+                    AND role = '10'
+                </when>
+
+            </choose>
+
+        </where>
+    </sql>
+
+    <select id="doRetrieve" parameterType="UserVO"
+            resultType="UserVO">
+
+        SELECT A.*,B.*
+        FROM(
+        SELECT TT1.rnum AS no,
+        TT1.email,
+        TT1.name,
+        TT1.password,
+        TT1.tel,
+        TT1.edu,
+        TT1.role,
+        TT1.gender
+        FROM (
+        SELECT ROWNUM AS
+        rnum, T1.*
+        FROM (SELECT *
+        FROM users
+        --WHERE조건 email(10),name(20),
+        <include refid="searchCondition"></include>
+        ORDER BY name desc
+        )T1
+
+        <![CDATA[   WHERE ROWNUM <= ( #{pageSize} * (#{pageNo} - 1)+ #{pageSize} )
+		    )TT1
+		    WHERE rnum >= ( #{pageSize} * (#{pageNo} - 1)+ 1 ) ]]>
+        )A
+        CROSS JOIN
+        (
+        SELECT COUNT(*) total_cnt
+        FROM users
+        --WHERE조건
+        <include refid="searchCondition"></include>
+        )B
+
+    </select>
+
+
+    <resultMap type="UserVO" id="userMap">
+        <result column="EMAIL" property="email" />
+        <result column="NAME" property="name" />
+        <result column="PASSWORD" property="password" />
+        <result column="TEL" property="tel" />
+        <result column="EDU" property="edu" />
+        <result column="ROLE" property="role" />
+        <result column="gender" property="gender" />
+
+    </resultMap>
+
+    <select id="getAll" parameterType="UserVO" resultMap="userMap">
+        SELECT
+            email,
+            name,
+            password,
+            tel,
+            edu,
+            role,
+            gender
+        FROM
+            users
+        WHERE email LIKE
+              #{email}||'%'
+        ORDER BY email
+    </select> <!-- 메일(계정) 불러오기? 회원 조회할때 사용할듯 -->
+
+    <select id="getCount" resultType="int" parameterType="UserVO">
+        SELECT
+            COUNT(*) cnt
+        FROM
+            users
+        WHERE email LIKE #{email} ||'%'
+    </select> <!-- users 테이블에있는 email갯수 카운팅 하는 쿼리 -->
+
+
+    <update id="doUpdate" parameterType="UserVO">
+        UPDATE users
+        SET email =
+            #{email}
+          ,name = #{name}
+          ,password = #{password}
+          ,tel = #{tel}
+          ,edu =
+            #{edu}
+          ,role = #{role}
+          ,gender = #{gender}
+        WHERE
+            email = #{email}
+    </update> <!-- 회원정보 변경 쿼리 -->
+
+    <update id="doPauseUser" parameterType="UserVO">
+        UPDATE users
+        SET status =
+                #{status}
+        WHERE
+            email = #{email}
+    </update> <!-- 회원정보 변경 쿼리 -->
+
+
+    <!-- update password (비밀번호 찾기 부분) -->
+    <update id="doUpdatePassword" parameterType="UserVO">
+        UPDATE users
+        SET
+            password = #{password},
+            salt = #{salt}
+        WHERE
+            email = #{email}
+    </update>
+
+
+    <select id="doSelectOne" parameterType="UserVO"
+            resultType="UserVO">
+        SELECT
+            email,
+            name,
+            password,
+            tel,
+            edu,
+            role,
+            gender,
+            status
+        FROM
+            users
+        WHERE email = #{email}
+    </select> <!-- 한건 조회 -->
+
+
+    <insert id="doSave" parameterType="UserVO">
+        INSERT INTO users (
+            email,
+            name,
+            password,
+            tel,
+            edu,
+            role,
+            salt,
+            gender,
+            status
+        ) VALUES (
+                     #{email},
+                     #{name},
+                     #{password},
+                     #{tel},
+                     #{edu},
+                     #{role},
+                     #{salt},
+                     #{gender},
+                     '1'
+                 )
+    </insert> <!-- 회원 등록 쿼리 -->
+
+
+    <delete id="doDelete" parameterType="UserVO">
+        DELETE FROM users
+        WHERE email
+                  = #{email}
+    </delete> <!-- 회원 삭제 쿼리 -->
+
+</mapper>

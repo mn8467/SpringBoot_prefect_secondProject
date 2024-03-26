@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test_prefect.mapper.CodeDao">
+    <select id="doRetrieve"  resultType="CodeVO">
+        SELECT
+        mst_code,
+        det_code,
+        mst_name,
+        det_name,
+        seq,
+        use_yn,
+        reg_dt,
+        reg_id,
+        mod_dt,
+        mod_id
+        FROM
+        cmn_code
+        WHERE use_yn    = 1
+        AND mst_code IN
+        <foreach item="item" index="index" collection="code"
+                 open=" (" separator="," close=")" >
+            #{item}
+        </foreach>
+        ORDER BY mst_code ASC, seq ASC
+    </select>
+
+</mapper>
