@@ -3,16 +3,12 @@ spring:
     host: smtp.naver.com
     port: 465
     username: mn8467@naver.com
-    password: 비번
+    password: hyoshingod123
     default-encoding: utf-8
-    javaMailProperties:
-     mail.smtp.host: smtp.naver.com
-     mail.smtp.port: 465
-     mail.smtp.auth: true
-     mail.smtp.ssl.protocols: TLSv1.2
-     mail.smtp.ssl.enable: true
-     mail.smtp.ssl.trust: smtp.naver.com
-     mail.debug: true
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+      mail.smtp.ssl.trust: smtp.naver.com
 
   mvc:
     static-path-pattern: /static/**

@@ -97,12 +97,12 @@
 						<option>@gmail.com</option>
 						<option>@hanmail.com</option>
 						<option>@yahoo.co.kr</option>
-					</select>
+						<option>@nate.com</option>
+				</select>
 				</div>
 				<div class="input-group-addon">
-					<span class="id_ok" style="color: green; display: none;">사용
-						가능한 아이디입니다.</span> <span class="id_already"
-						style="color: red; display: none;">중복된 아이디입니다!</span>
+					<span class="id_ok" style="color: green; display: none;">사용가능한 아이디입니다.</span>
+					<span class="id_already" style="color: red; display: none;">중복된 아이디입니다!</span>
 					<button type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
 				</div>
 				<div class="mail-check-box">
@@ -239,41 +239,25 @@
 							$('#mail-Check-Btn')
 									.click(
 											function() {
-												const email = $('#userEmail1')
-														.val()
-														+ $('#userEmail2')
-																.val(); // 이메일 주소값 얻어오기!
-												console.log('완성된 이메일 : '
-														+ email); // 이메일 오는지 확인
-												const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
-
-												let email1 = document
-														.querySelector("#userEmail1").value;
+												const email = $('#userEmail1').val()+ $('#userEmail2').val(); // 이메일 주소값 얻어오기!
+												console.log('완성된 이메일 : '+ email); // 이메일 오는지 확인
+												const checkInput = $('.mail-check-input') // 인증번호 입력하는곳
+												let email1 = document.querySelector("#userEmail1").value;
 												/* console.log("javascript ppl_input:"+document.querySelector(".ppl_input").value);    */
-
 												if (eUtil.isEmpty(email1) == true) {
 													alert('이메일을 입력 하세요.');
 													//$("#email").focus();//사용자 id에 포커스
 													document.querySelector(
 															"#userEmail1")
 															.focus();
-													return;
-												}
+													return;}
 
-												$
-														.ajax({
+												$.ajax({
 															type : 'get',
-															url : '/user/mailCheck.do?email='
-																	+ email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
-															success : function(
-																	data) {
-																console
-																		.log("data : "
-																				+ data);
-																checkInput
-																		.attr(
-																				'disabled',
-																				false);
+															url : '/user/mailCheck.do?email=' + email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+															success : function(data) {
+																console.log("data : "+ data);
+																checkInput.attr('disabled',false);
 																code = data;
 																alert('인증번호가 전송되었습니다.')
 															}
@@ -283,8 +267,7 @@
 							// 인증번호 비교 
 							// blur -> focus가 벗어나는 경우 발생
 							$('.mail-check-input')
-									.blur(
-											function() {
+									.blur(function() {
 												const inputCode = $(this).val();
 												const $resultMsg = $('#mail-check-warn');
 												const name = $('#name');
@@ -293,37 +276,24 @@
 												const password2 = $('#user-password2');
 												const education = $('#education');
 												const role = $('#role');
+												const gender = $('#gender');
 
 												if (inputCode == code) {
-													$resultMsg
-															.html('인증번호가 일치합니다.');
-													$resultMsg.css('color',
-															'green');
-													$('#mail-Check-Btn').attr(
-															'disabled', true);
-													$('#userEamil1').attr(
-															'readonly', true);
-													$('#userEamil2').attr(
-															'readonly', true);
-													$('#userEmail2')
-															.attr('onFocus',
-																	'this.initialSelect = this.selectedIndex');
-													$('#userEmail2')
-															.attr('onChange',
-																	'this.selectedIndex = this.initialSelect');
-													name
-															.attr('disabled',
-																	false);
-													password1.attr('disabled',
-															false);
-													password2.attr('disabled',
-															false);
+													$resultMsg.html('인증번호가 일치합니다.');
+													$resultMsg.css('color','green');
+													$('#mail-Check-Btn').attr('disabled', true);
+													$('#userEamil1').attr('readonly', true);
+													$('#userEamil2').attr('readonly', true);
+													$('#userEmail2').attr('onFocus','this.initialSelect = this.selectedIndex');
+													$('#userEmail2').attr('onChange','this.selectedIndex = this.initialSelect');
+													name.attr('disabled',false);
+													password1.attr('disabled',false);
+													password2.attr('disabled',false);
 													tel.attr('disabled', false);
-													education.attr('disabled',
-															false);
-													role
-															.attr('disabled',
-																	false);
+													education.attr('disabled',false);
+													role.attr('disabled',false);
+													gender.attr('disabled',false);
+
 												} else {
 													$resultMsg
 															.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');

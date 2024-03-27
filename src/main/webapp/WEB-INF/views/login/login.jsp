@@ -125,7 +125,7 @@ $(document).ready(function(){
 
 <body>
 	<div class="uf-form-signin">
- 		 <a href="/main.jsp" class="navbar-login">
+ 		 <a href="/" class="navbar-login">
            <div class="arms-container d-flex align-items-center">
               <img src="/static/template/img/acorn.png" alt="ARMS Logo" width="200" height="100">
            </div>
@@ -140,7 +140,7 @@ $(document).ready(function(){
 					<!-- 빈공간을 만들기 위함-->
 				</div>
 				<div class="search_email">
-					<a href="/search/searchEmailView.do">이메일 찾기</a>
+					<a href="/user/search/searchEmailView.do">이메일 찾기</a>
 				</div>
 			</div>
 			<div class="input-group uf-input-group input-group-lg mb-3">
@@ -151,7 +151,7 @@ $(document).ready(function(){
 				<div class="form-check">
 					<!-- 빈공간을 만들기 위함-->
 				</div>
-				<a href="/search/searchPasswordView.do">비밀번호 찾기</a>
+				<a href="/user/search/searchPasswordView.do">비밀번호 찾기</a>
 			</div>
 			<div class="d-grid mb-4">
 				<button type="submit" class="btn uf-btn-primary btn-lg" id="doLogin">  로   그   인  </button>

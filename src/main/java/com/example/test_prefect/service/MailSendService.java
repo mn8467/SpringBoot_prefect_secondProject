@@ -15,7 +15,7 @@ import java.util.Random;
 public class MailSendService implements PcwkLogger {
 
     @Autowired
-    private JavaMailSenderImpl mailSender;
+    private JavaMailSenderImpl mailSender; //intellj 에선 에러뜨는데 상관없음
     private int authNumber;
     // 난수 발생(여러분들 맘대러)
 
@@ -31,7 +31,7 @@ public class MailSendService implements PcwkLogger {
     //이메일 보낼 양식!
     public String joinEmail(String email) {
         makeRandomNumber();
-        String setFrom = "dlgkssk1627@naver.com"; // email-config에 설정한 자신의 이메일 주소를 입력
+        String setFrom = "mn8467@naver.com"; // applicaiton.yml 에 설정한 자신의 이메일 주소를 입력
         String toMail = email;
         String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목
         String content =
@@ -49,7 +49,7 @@ public class MailSendService implements PcwkLogger {
     //이메일 보낼 양식!
     public String findPassword(String email) {
         makeRandomNumber();
-        String setFrom = "dlgkssk1627@naver.com"; // email-config에 설정한 자신의 이메일 주소를 입력
+        String setFrom = "mn8467@naver.com"; // applicaiton.yml 에 설정한 자신의 이메일 주소를 입력
         String toMail = email;
         String title = "비밀번호 찾기 인증 이메일 입니다."; // 이메일 제목
         String content =

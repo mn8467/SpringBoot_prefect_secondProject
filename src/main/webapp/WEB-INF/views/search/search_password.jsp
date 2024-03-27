@@ -81,7 +81,7 @@ body {
 </style>
 </head>
 <body>
-    <div class="uf-form-signin">
+    <div class="uf-form-signin col-md-6">
  		 <a href="/" class="navbar-brand">
             <div class="arms-container d-flex align-items-center">
              <img src="/static/template/img/acorn.png" alt="ARMS Logo" width="150" height="75">

@@ -121,13 +121,13 @@
 		<!-- 회원 등록영역 -->
 		<div>
 			<form action="#" name="userRegFrm">
-				<div class="mb-3">
+				<div class="mb-3 col-6">
 					<label for="email" class="form-label">이메일</label> <input
 						type="text" class="form-control ppl_input" readonly="readonly"
 						name="email" id="email" value="${user.email }" size="20"
 						maxlength="30">
 				</div>
-				<div class="mb-3">
+				<div class="mb-3 col-6">
 					<label for="password" class="form-label">비밀번호</label>
                    <input type="password"  class="form-control"  name="password" id="user-password" placeholder="비밀번호를 입력 하세요." size="20"  maxlength="30" required oninput="passwordCheck()">
                    <span class="password_ok" style="color:green; display:none;">사용 가능한 비밀번호입니다.</span>
